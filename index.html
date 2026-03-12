@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACEest Fitness & Gym</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+
+    <header class="glass">
+        <div class="logo-container">
+            <h1>ACEest</h1>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-btn active" data-target="home">Dashboard</button>
+            <button class="nav-btn" data-target="programs">Programs</button>
+            <button class="nav-btn" data-target="classes">Classes</button>
+            <button class="nav-btn" data-target="members">Members</button>
+            <button class="nav-btn" data-target="calories">Calorie Calculator</button>
+        </nav>
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span id="api-status" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary);">Connecting...</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Loading State -->
+        <div class="loading-container" id="global-loader">
+            <span class="loader"></span>
+        </div>
+
+        <!-- Home View -->
+        <section id="view-home" class="view-section active">
+            <h2 class="section-title">Welcome Back.</h2>
+            <p class="section-subtitle">ACEest Fitness System Overview</p>
+
+            <div class="grid-layout">
+                <div class="data-card glass">
+                    <h3 class="card-title">System Status</h3>
+                    <div class="card-body">
+                        <p id="home-status-msg">Loading system diagnostics...</p>
+                        <button class="btn-primary" onclick="switchTab('programs')" style="margin-top: 1rem;">View Programs</button>
+                    </div>
+                </div>
+                
+                <div class="data-card glass">
+                    <h3 class="card-title">Quick Actions</h3>
+                    <div class="card-body">
+                        <button class="btn-primary" onclick="switchTab('members')" style="width: 100%; margin-bottom: 1rem;">Add New Member</button>
+                        <button class="btn-primary" onclick="switchTab('calories')" style="width: 100%; background: transparent; border: 1px solid var(--gold); color: var(--gold)">Calculate Macros</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs View -->
+        <section id="view-programs" class="view-section">
+            <h2 class="section-title">Training Programs</h2>
+            <p class="section-subtitle">Available Regimens</p>
+            <div id="programs-grid" class="grid-layout">
+                <!-- Javascript will inject cards here -->
+            </div>
+        </section>
+
+        <!-- Classes View -->
+        <section id="view-classes" class="view-section">
+            <h2 class="section-title">Class Schedule</h2>
+            <p class="section-subtitle">Live Gym Sessions</p>
+            <div id="classes-grid" class="grid-layout">
+                <!-- Javascript will inject cards here -->
+            </div>
+        </section>
+
+        <!-- Members View -->
+        <section id="view-members" class="view-section">
+            <h2 class="section-title">Member Directory</h2>
+            <p class="section-subtitle">Active Clients</p>
+            <div id="members-grid" class="grid-layout">
+                <!-- Javascript will inject cards here -->
+            </div>
+        </section>
+
+        <!-- Calorie Calculator View -->
+        <section id="view-calories" class="view-section">
+            <h2 class="section-title">Macro Calculator</h2>
+            <p class="section-subtitle">Determine Daily Requirements</p>
+            
+            <div class="glass data-card form-container">
+                <form id="calorie-form">
+                    <div class="input-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" step="0.1" required placeholder="e.g. 75">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="program-select">Assigned Program</label>
+                        <select id="program-select" required>
+                            <option value="">Select a program...</option>
+                            <option value="Beginner (BG)">Beginner (BG)</option>
+                            <option value="Fat Loss (FL) - 3 day">Fat Loss (FL) - 3 day</option>
+                            <option value="Fat Loss (FL) - 5 day">Fat Loss (FL) - 5 day</option>
+                            <option value="Muscle Gain (MG) - PPL">Muscle Gain (MG) - PPL</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" style="width: 100%;">Calculate Target</button>
+                </form>
+
+                <div id="calorie-result" class="glass result-card" style="display: none; padding: 2rem;">
+                    <p style="color: var(--text-secondary); font-family: var(--font-mono); text-transform: uppercase;">Daily Target</p>
+                    <div class="result-number" id="result-kcal">0</div>
+                    <p style="color: var(--text-primary); font-family: var(--font-mono);">kcal / day</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -30,6 +30,27 @@ pipeline {
                 sh "docker run --rm ${IMAGE_NAME} pytest test_app.py -v"
             }
         }
+
+        stage('Deploy to Vercel') {
+            when {
+                branch 'main'
+            }
+            steps {
+                withCredentials([
+                    string(credentialsId: 'VERCEL_TOKEN', variable: 'VERCEL_TOKEN'),
+                    string(credentialsId: 'VERCEL_ORG_ID', variable: 'VERCEL_ORG_ID'),
+                    string(credentialsId: 'VERCEL_PROJECT_ID', variable: 'VERCEL_PROJECT_ID')
+                ]) {
+                    // Install Vercel CLI globally
+                    sh 'npm install -g vercel'
+                    
+                    // Deploy to Vercel stringently with the production flag
+                    sh 'vercel pull --yes --environment=production --token=$VERCEL_TOKEN'
+                    sh 'vercel build --prod --token=$VERCEL_TOKEN'
+                    sh 'vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN'
+                }
+            }
+        }
     }
     
     post {
